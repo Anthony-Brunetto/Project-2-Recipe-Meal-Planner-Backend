@@ -1,15 +1,51 @@
 package com.example.demo.hello.entity;
 
+import com.example.demo.hello.entity.User;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "mealPlan")
 public class MealPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long meal_plan_id;
+    private Long mealPlanId;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     public MealPlan() {}
 
-    // getters and setters
+    public Long getMealPlanId() {
+        return mealPlanId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 }
