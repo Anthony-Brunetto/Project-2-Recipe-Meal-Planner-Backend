@@ -1,6 +1,5 @@
 package com.example.demo.hello.entity;
 
-import com.example.demo.hello.entity.User;
 import jakarta.persistence.*;
 
 @Entity
@@ -64,5 +63,39 @@ public class Recipe {
 
     public void setOriginalUser(String originalUser) {
         this.originalUser = originalUser;
+    }
+
+    @Override
+    public String toString() {
+        return (
+            "Recipe{" +
+            "recipeId=" +
+            recipeId +
+            ", userId=" +
+            (user != null ? user.getUserId() : null) +
+            ", name='" +
+            name +
+            '\'' +
+            ", description='" +
+            description +
+            '\'' +
+            ", originalUser='" +
+            originalUser +
+            '\'' +
+            '}'
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Recipe)) return false;
+        Recipe recipe = (Recipe) o;
+        return recipeId != null && recipeId.equals(recipe.recipeId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

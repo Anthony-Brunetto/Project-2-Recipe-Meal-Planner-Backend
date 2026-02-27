@@ -1,6 +1,5 @@
 package com.example.demo.hello.entity;
 
-import com.example.demo.hello.entity.User;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -47,5 +46,34 @@ public class MealPlan {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        return (
+            "MealPlan{" +
+            "mealPlanId=" +
+            mealPlanId +
+            ", userId=" +
+            (user != null ? user.getUserId() : null) +
+            ", startDate=" +
+            startDate +
+            ", endDate=" +
+            endDate +
+            '}'
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MealPlan)) return false;
+        MealPlan that = (MealPlan) o;
+        return mealPlanId != null && mealPlanId.equals(that.mealPlanId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
