@@ -1,7 +1,5 @@
 package com.example.demo.hello.entity;
 
-import com.example.demo.hello.entity.MealPlan;
-import com.example.demo.hello.entity.Recipe;
 import jakarta.persistence.*;
 
 @Entity
@@ -40,5 +38,32 @@ public class MealPlanEntry {
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    @Override
+    public String toString() {
+        return (
+            "MealPlanEntry{" +
+            "entryId=" +
+            entryId +
+            ", mealPlanId=" +
+            (mealPlan != null ? mealPlan.getMealPlanId() : null) +
+            ", recipeId=" +
+            (recipe != null ? recipe.getRecipeId() : null) +
+            '}'
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MealPlanEntry)) return false;
+        MealPlanEntry that = (MealPlanEntry) o;
+        return entryId != null && entryId.equals(that.entryId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -52,4 +52,38 @@ public class Ingredient {
     public void setCalories(Integer calories) {
         this.calories = calories;
     }
+
+    @Override
+    public String toString() {
+        return (
+            "Ingredient{" +
+            "ingredientId=" +
+            ingredientId +
+            ", ingredientName='" +
+            ingredientName +
+            '\'' +
+            ", description='" +
+            description +
+            '\'' +
+            ", unit='" +
+            unit +
+            '\'' +
+            ", calories=" +
+            calories +
+            '}'
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Ingredient)) return false;
+        Ingredient that = (Ingredient) o;
+        return ingredientId != null && ingredientId.equals(that.ingredientId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

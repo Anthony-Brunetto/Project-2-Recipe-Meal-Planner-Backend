@@ -1,7 +1,5 @@
 package com.example.demo.hello.entity;
 
-import com.example.demo.hello.entity.Ingredient;
-import com.example.demo.hello.entity.Recipe;
 import jakarta.persistence.*;
 
 @Entity
@@ -59,5 +57,40 @@ public class RecipeIngredient {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    @Override
+    public String toString() {
+        return (
+            "RecipeIngredient{" +
+            "recipeIngredientId=" +
+            recipeIngredientId +
+            ", ingredientId=" +
+            (ingredient != null ? ingredient.getIngredientId() : null) +
+            ", recipeId=" +
+            (recipe != null ? recipe.getRecipeId() : null) +
+            ", quantity=" +
+            quantity +
+            ", unit='" +
+            unit +
+            '\'' +
+            '}'
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RecipeIngredient)) return false;
+        RecipeIngredient that = (RecipeIngredient) o;
+        return (
+            recipeIngredientId != null &&
+            recipeIngredientId.equals(that.recipeIngredientId)
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
