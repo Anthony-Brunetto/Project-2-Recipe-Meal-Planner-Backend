@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/recipes")
 public class RecipeController {
 
     private final RecipeRepository recipeRepository;
@@ -19,18 +20,13 @@ public class RecipeController {
     }
 
     // Get all recipes
-    @GetMapping("/api/recipes")
+    @GetMapping
     public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
 
-    @PostMapping("/api/recipes")
-    Recipe newRecipe(@RequestBody Recipe newRecipe) {
-        return recipeRepository.save(newRecipe);
-    }
-
     // Get recipe IDs
-    @GetMapping("/api/recipes/{id}")
+    @GetMapping("/{id}")
     public Recipe getRecipeById(@PathVariable Long id) {
         return recipeRepository
             .findById(id)
@@ -38,13 +34,24 @@ public class RecipeController {
     }
 
     // Get recipes that belong to userId #
-    @GetMapping("/api/recipes/{userId}")
+    @GetMapping("/user/{userId}")
     public List<Recipe> getRecipesByUser(@PathVariable Long userId) {
         return recipeRepository.findByUser_UserId(userId);
     }
 
+    // Post recipes
+    @PostMapping
+    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe newRecipe) {
+        Recipe saved = recipeRepository.save(newRecipe);
+
+        // IMPORTANT: PK getter is getRecipeId()
+        return ResponseEntity.created(
+            URI.create("/api/recipes/" + saved.getRecipeId())
+        ).body(saved);
+    }
+
     // Put recipe ID
-    @PutMapping("/api/recipes/{id}")
+    @PutMapping("/{id}")
     public Recipe updateRecipe(
         @RequestBody Recipe updatedRecipe,
         @PathVariable Long id
@@ -63,7 +70,7 @@ public class RecipeController {
     }
 
     // Delete recipe ID
-    @DeleteMapping("/api/recipes/{id}")
+    @DeleteMapping("/{id}")
     public void deleteRecipe(@PathVariable Long id) {
         if (!recipeRepository.existsById(id)) {
             throw new RecipeNotFoundException(id);
