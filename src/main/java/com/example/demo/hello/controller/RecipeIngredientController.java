@@ -17,12 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/recipe-ingredients")
 public class RecipeIngredientController {
 
     private final RecipeIngredientRepository recipeIngredientRepository;
@@ -39,19 +37,19 @@ public class RecipeIngredientController {
         this.ingredientRepository = ingredientRepository;
     }
 
-    @GetMapping
+    @GetMapping("/api/recipe-ingredients")
     public List<RecipeIngredient> getAllRecipeIngredients() {
         return recipeIngredientRepository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/recipe-ingredients/{id}")
     public RecipeIngredient getRecipeIngredientById(@PathVariable Long id) {
         return recipeIngredientRepository
             .findById(id)
             .orElseThrow(() -> new RecipeIngredientNotFoundException(id));
     }
 
-    @GetMapping("/recipe/{recipeId}")
+    @GetMapping("/api/recipe-ingredients/recipe/{recipeId}")
     public List<RecipeIngredient> getRecipeIngredientsByRecipe(
         @PathVariable Long recipeId
     ) {
@@ -62,7 +60,7 @@ public class RecipeIngredientController {
         return recipeIngredientRepository.findByRecipe_RecipeId(recipeId);
     }
 
-    @PostMapping
+    @PostMapping("/api/recipe-ingredients")
     public ResponseEntity<RecipeIngredient> createRecipeIngredient(
         @RequestBody RecipeIngredient newRecipeIngredient
     ) {
@@ -79,7 +77,7 @@ public class RecipeIngredientController {
             .body(saved);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/recipe-ingredients/{id}")
     public RecipeIngredient updateRecipeIngredient(
         @RequestBody RecipeIngredient updatedRecipeIngredient,
         @PathVariable Long id
@@ -97,7 +95,7 @@ public class RecipeIngredientController {
             .orElseThrow(() -> new RecipeIngredientNotFoundException(id));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/recipe-ingredients/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRecipeIngredient(@PathVariable Long id) {
         if (!recipeIngredientRepository.existsById(id)) {
