@@ -1,5 +1,7 @@
 package com.example.demo.hello.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +14,8 @@ public class MealPlanEntry {
 
     @ManyToOne
     @JoinColumn(name = "mealPlanId")
+    @JsonBackReference
+    @JsonIgnoreProperties("mealPlanEntries")
     private MealPlan mealPlan;
 
     @ManyToOne
