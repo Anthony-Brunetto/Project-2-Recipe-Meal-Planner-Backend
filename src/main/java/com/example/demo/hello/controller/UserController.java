@@ -21,24 +21,24 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("users")
+    @GetMapping("/api/users")
     List<User> all() {
         return userRepository.findAll();
     }
 
-    @PostMapping("/users")
+    @PostMapping("/api/users")
     User newUser(@RequestBody User newUser) {
         return userRepository.save(newUser);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/api/users/{id}")
     User one(@PathVariable Long id) {
         return userRepository
             .findById(id)
             .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/api/users/{id}")
     User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
         return userRepository
             .findById(id)
@@ -52,7 +52,7 @@ public class UserController {
             });
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/api/users/{id}")
     void deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
