@@ -1,22 +1,34 @@
 package com.example.demo.hello.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "mealPlan")
+@Table(name = "meal_plan")
 public class MealPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "meal_plan_id")
     private Long mealPlanId;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    @Column(name = "day_of_week")
+    private String dayOfWeek;
+
+    @Column(name = "part_of_day")
+    private String partOfDay;
+
+    @OneToMany(mappedBy = "mealPlan")
+    @JsonManagedReference
+    @JsonIgnoreProperties("mealPlan")
+    private List<MealPlanEntry> mealPlanEntries = new ArrayList<>();
 
     public MealPlan() {}
 
@@ -32,20 +44,28 @@ public class MealPlan {
         this.user = user;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public String getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public String getPartOfDay() {
+        return partOfDay;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setPartOfDay(String partOfDay) {
+        this.partOfDay = partOfDay;
+    }
+
+    public List<MealPlanEntry> getMealPlanEntries() {
+        return mealPlanEntries;
+    }
+
+    public void setMealPlanEntries(List<MealPlanEntry> mealPlanEntries) {
+        this.mealPlanEntries = mealPlanEntries;
     }
 
     @Override
@@ -56,10 +76,12 @@ public class MealPlan {
             mealPlanId +
             ", userId=" +
             (user != null ? user.getUserId() : null) +
-            ", startDate=" +
-            startDate +
-            ", endDate=" +
-            endDate +
+            ", dayOfWeek='" +
+            dayOfWeek +
+            '\'' +
+            ", partOfDay='" +
+            partOfDay +
+            '\'' +
             '}'
         );
     }
