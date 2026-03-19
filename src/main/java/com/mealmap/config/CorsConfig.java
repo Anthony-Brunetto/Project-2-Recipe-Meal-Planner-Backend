@@ -1,4 +1,4 @@
-package com.example.demo.hello.config;
+package com.mealmap.config;
 
 import java.util.Arrays;
 import java.util.List;
