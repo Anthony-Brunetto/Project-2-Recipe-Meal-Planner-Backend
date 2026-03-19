@@ -44,7 +44,6 @@ public class UserController {
             .findById(id)
             .map(user -> {
                 user.setUsername(newUser.getUsername());
-                user.setUsername(newUser.getUsername());
                 return userRepository.save(user);
             })
             .orElseGet(() -> {
