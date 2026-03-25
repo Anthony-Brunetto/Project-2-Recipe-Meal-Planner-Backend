@@ -1,6 +1,7 @@
 package com.mealmap.entity;
 
 import jakarta.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Table(name = "users")
@@ -10,17 +11,42 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @Column(unique = true, nullable = false)
+    private String supabaseId;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
     private String username;
-    private String passwordHash;
+
+    private Instant createdAt;
 
     public User() {}
 
-    public User(String username) {
+    public User(String supabaseId, String email, String username) {
+        this.supabaseId = supabaseId;
+        this.email = email;
         this.username = username;
     }
 
     public Long getUserId() {
         return userId;
+    }
+
+    public String getSupabaseId() {
+        return supabaseId;
+    }
+
+    public void setSupabaseId(String supabaseId) {
+        this.supabaseId = supabaseId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -31,12 +57,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
@@ -45,9 +71,17 @@ public class User {
             "User{" +
             "userId=" +
             userId +
+            ", supabaseId='" +
+            supabaseId +
+            '\'' +
+            ", email='" +
+            email +
+            '\'' +
             ", username='" +
             username +
             '\'' +
+            ", createdAt=" +
+            createdAt +
             '}'
         );
     }
