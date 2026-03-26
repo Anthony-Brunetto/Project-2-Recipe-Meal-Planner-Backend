@@ -75,7 +75,7 @@ http://localhost:8080
 
 ## Swagger Docs
 
-- [Swagger docs link]
+- https://recipe-backend-production-2e13.up.railway.app/swagger-ui/index.html
 
 ## Postman Collection
 

@@ -37,6 +37,8 @@ public class SecurityConfig {
                 auth
                     .requestMatchers("/api/users/sync")
                     .permitAll()
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
+                    .permitAll()
                     .anyRequest()
                     .authenticated()
             )
