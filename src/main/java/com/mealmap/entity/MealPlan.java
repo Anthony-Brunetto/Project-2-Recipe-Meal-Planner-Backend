@@ -25,11 +25,7 @@ public class MealPlan {
     @Column(name = "part_of_day")
     private String partOfDay;
 
-    @OneToMany(
-        mappedBy = "mealPlan",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "mealPlan")
     @JsonManagedReference
     @JsonIgnoreProperties("mealPlan")
     private List<MealPlanEntry> mealPlanEntries = new ArrayList<>();

@@ -1,8 +1,6 @@
 package com.mealmap.entity;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "ingredient")
@@ -16,13 +14,6 @@ public class Ingredient {
     private String description;
     private String unit;
     private Integer calories;
-
-    @OneToMany(
-        mappedBy = "ingredient",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
-    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
     public Ingredient() {}
 
@@ -60,14 +51,6 @@ public class Ingredient {
 
     public void setCalories(Integer calories) {
         this.calories = calories;
-    }
-
-    public List<RecipeIngredient> getRecipeIngredients() {
-        return recipeIngredients;
-    }
-
-    public void setRecipeIngredients(List<RecipeIngredient> recipeIngredients) {
-        this.recipeIngredients = recipeIngredients;
     }
 
     @Override
