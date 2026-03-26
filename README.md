@@ -80,3 +80,5 @@ http://localhost:8080
 ## Postman Collection
 
 - https://justinmnmj-9799560.postman.co/workspace/Justin-Martinez's-Workspace~91629d83-a482-4a4c-8e39-aa74c64b0269/collection/51750544-d1028f60-5505-4838-809b-faaff1db8121?action=share&creator=51750544&active-environment=51750544-d10f3341-c03e-4e9d-a435-3c3419da08db
+
+<img width="1974" height="1221" alt="image" src="https://github.com/user-attachments/assets/c20ce9fa-d3de-44a9-8f94-d2c0dd6cae92" />
