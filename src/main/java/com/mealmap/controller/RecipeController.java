@@ -1,11 +1,14 @@
 package com.mealmap.controller;
 
+import com.mealmap.dto.FeaturedRecipeResponse;
 import com.mealmap.entity.Recipe;
 import com.mealmap.exception.RecipeNotFoundException;
 import com.mealmap.repository.RecipeRepository;
-import java.net.URI;
+import com.mealmap.service.RecipeService;
+import java.time.Duration;
 import java.util.List;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +16,33 @@ import org.springframework.web.bind.annotation.*;
 public class RecipeController {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeService recipeService;
 
-    public RecipeController(RecipeRepository recipeRepository) {
+    public RecipeController(
+        RecipeRepository recipeRepository,
+        RecipeService recipeService
+    ) {
         this.recipeRepository = recipeRepository;
+        this.recipeService = recipeService;
     }
 
     // Get all recipes
     @GetMapping("/api/recipes")
     public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
+    }
+
+    @GetMapping("/api/recipes/featured/today")
+    public ResponseEntity<List<FeaturedRecipeResponse>> getFeaturedRecipesToday() {
+        Duration cacheTtl = recipeService.getCacheTtl();
+
+        // Featured recipes rotate on the current date in one explicit timezone so
+        // every request for that day returns the same deterministic selection.
+        return ResponseEntity
+            .ok()
+            .cacheControl(CacheControl.maxAge(cacheTtl).cachePublic())
+            .header(HttpHeaders.VARY, "Accept-Encoding")
+            .body(recipeService.getTodayFeaturedRecipes());
     }
 
     @PostMapping("/api/recipes")
