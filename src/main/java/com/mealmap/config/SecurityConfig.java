@@ -18,12 +18,7 @@ public class SecurityConfig {
             .cors(cors ->
                 cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(
-                        List.of(
-                            "http://localhost:5173",
-                            "https://your-frontend.com"
-                        )
-                    );
+                    config.setAllowedOrigins(List.of("http://localhost:5173"));
                     config.setAllowedMethods(
                         List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     );
@@ -33,7 +28,7 @@ public class SecurityConfig {
                 })
             )
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+            .authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
 
         return http.build();
     }

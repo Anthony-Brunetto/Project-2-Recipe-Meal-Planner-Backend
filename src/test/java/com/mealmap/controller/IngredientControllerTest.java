@@ -2,6 +2,7 @@ package com.mealmap.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -69,7 +70,9 @@ class IngredientControllerTest {
         Ingredient existing = ingredient(2L, "Old");
         Ingredient update = ingredient(null, "New");
 
-        when(ingredientRepository.findById(2L)).thenReturn(Optional.of(existing));
+        when(ingredientRepository.findById(2L)).thenReturn(
+            Optional.of(existing)
+        );
         when(ingredientRepository.save(any(Ingredient.class))).thenAnswer(
             invocation -> invocation.getArgument(0)
         );
@@ -84,5 +87,41 @@ class IngredientControllerTest {
     void deleteIngredientDeletesById() {
         ingredientController.deleteIngredient(3L);
         verify(ingredientRepository).deleteById(3L);
+    }
+
+    @Test
+    void replaceIngredientCreatesNewWhenNotFound() {
+        Ingredient update = ingredient(null, "New");
+
+        when(ingredientRepository.findById(99L)).thenReturn(Optional.empty());
+        when(ingredientRepository.save(any(Ingredient.class))).thenAnswer(
+            invocation -> invocation.getArgument(0)
+        );
+
+        Ingredient result = ingredientController.replaceIngredient(update, 99L);
+
+        assertEquals("New", result.getIngredientName());
+        verify(ingredientRepository).save(update);
+    }
+
+    @Test
+    void allReturnsEmptyListWhenNoIngredients() {
+        when(ingredientRepository.findAll()).thenReturn(List.of());
+
+        List<Ingredient> result = ingredientController.all();
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void oneReturnsIngredientWhenFound() {
+        Ingredient ingredient = ingredient(1L, "Egg");
+        when(ingredientRepository.findById(1L)).thenReturn(
+            Optional.of(ingredient)
+        );
+
+        Ingredient result = ingredientController.one(1L);
+
+        assertEquals("Egg", result.getIngredientName());
     }
 }
