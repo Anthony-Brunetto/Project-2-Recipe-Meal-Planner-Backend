@@ -75,8 +75,8 @@ http://localhost:8080
 
 ## Swagger Docs
 
-- [Swagger docs link]
+- https://recipe-backend-production-2e13.up.railway.app/swagger-ui/index.html
 
 ## Postman Collection
 
-- [Postman collection link]
+- https://justinmnmj-9799560.postman.co/workspace/Justin-Martinez's-Workspace~91629d83-a482-4a4c-8e39-aa74c64b0269/collection/51750544-d1028f60-5505-4838-809b-faaff1db8121?action=share&creator=51750544&active-environment=51750544-d10f3341-c03e-4e9d-a435-3c3419da08db
