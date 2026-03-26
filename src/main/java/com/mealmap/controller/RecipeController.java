@@ -38,7 +38,7 @@ public class RecipeController {
     }
 
     // Get recipes that belong to userId #
-    @GetMapping("/api/recipes/{userId}")
+    @GetMapping("/api/recipes/users/{userId}")
     public List<Recipe> getRecipesByUser(@PathVariable Long userId) {
         return recipeRepository.findByUser_UserId(userId);
     }
